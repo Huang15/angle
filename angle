@@ -1,0 +1,20 @@
+def calculate_angle(Ax,Ay,Bx,By,Cx,Cy):
+
+    # Vector BA and BC
+    BA = np.array([Ax - Bx, Ay - By])
+    BC = np.array([Cx - Bx, Cy - By])
+    
+    # Dot product and cross product magnitudes
+    dot_product = np.dot(BA, BC)
+    cross_product = np.cross(BA, BC)
+    
+    # Calculate the angle using arccos of the cosine of the angle
+    cosine_angle = dot_product / (np.linalg.norm(BA) * np.linalg.norm(BC))
+    angle_radians = np.arccos(np.clip(cosine_angle, -1.0, 1.0))  # Clip cos to avoid out of range errors due to floating point
+    angle_degrees = np.degrees(angle_radians)
+    
+    # Determine the direction of the angle (clockwise or counterclockwise)
+    if cross_product < 0:
+        angle_degrees = 360 - angle_degrees  
+    
+    return angle_degrees
